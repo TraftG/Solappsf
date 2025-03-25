@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Neuropol X';
+    src: url('../../public/fonts/NeuropolXRg-Regular.woff2') format('woff2'),
+         url('../../public/fonts/NeuropolXRg-Regular.woff') format('woff'),
+         url('../../public/fonts/neuropol x rg.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  .neuropol-font {
+    font-family: 'Neuropol X', sans-serif !important;
+  }
