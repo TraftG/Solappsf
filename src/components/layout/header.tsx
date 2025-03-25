@@ -6,10 +6,15 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { WalletButton } from "../WalletButton";
 import { ThemeToggle } from "../theme-toggle";
 import { Search } from "../Search";
+import { tokens } from "@/lib/data";
+import { useSolanaPrice } from '@/hooks/useSolanaPrice';
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
+  const { price } = useSolanaPrice();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -36,16 +41,20 @@ export function Header() {
     >
       <div className="container flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
-          <span className="font-neuropol text-xl hidden sm:block">Solapps</span>
+          <span className="font-neuropol text-xl block">Solapps</span>
         </Link>
 
         {!isMobile && (
           <div className="hidden md:flex items-center space-x-6 mx-4 flex-grow justify-center">
             <NavLink to="/projects">Projects</NavLink>
             <NavLink to="/tokens">Tokens</NavLink>
-            <NavLink to = "/developers">Developers</NavLink>
-            <NavLink to = "/swap">Swap</NavLink>
-            
+            <NavLink to="/developers">Developers</NavLink>
+            <NavLink to="/swap">Swap</NavLink>
+            {price !== null && (
+              <div className="flex items-center gap-2 text-sm -ml-4">
+                <span className="font-medium">SOL: ${price.toFixed(2)}</span>
+              </div>
+            )}
           </div>
         )}
 
@@ -55,24 +64,66 @@ export function Header() {
           </div>
           <ThemeToggle />
           {isMobile ? (
-            <Button variant="outline" size="icon" className="rounded-full">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
-              >
-                <line x1="4" x2="20" y1="12" y2="12" />
-                <line x1="4" x2="20" y1="6" y2="6" />
-                <line x1="4" x2="20" y1="18" y2="18" />
-              </svg>
-            </Button>
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon" className="rounded-full">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-5 w-5"
+                  >
+                    <line x1="4" x2="20" y1="12" y2="12" />
+                    <line x1="4" x2="20" y1="6" y2="6" />
+                    <line x1="4" x2="20" y1="18" y2="18" />
+                  </svg>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px]">
+                <div className="flex flex-col space-y-4 mt-8">
+                  <Link 
+                    to="/projects" 
+                    className="text-lg font-medium"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Projects
+                  </Link>
+                  <Link 
+                    to="/tokens" 
+                    className="text-lg font-medium"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Tokens
+                  </Link>
+                  <Link 
+                    to="/developers" 
+                    className="text-lg font-medium"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Developers
+                  </Link>
+                  <Link 
+                    to="/swap" 
+                    className="text-lg font-medium"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Swap
+                  </Link>
+                  {price !== null && (
+                    <div className="text-lg font-medium">
+                      SOL: ${price.toFixed(2)}
+                    </div>
+                  )}
+                  <WalletButton />
+                </div>
+              </SheetContent>
+            </Sheet>
           ) : (
             <WalletButton />
           )}

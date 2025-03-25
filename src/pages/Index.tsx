@@ -190,7 +190,7 @@ const Index = () => {
         <div className="container">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div className="space-y-2 mb-6 md:mb-0">
-              <h2 className="text-3xl font-bold tracking-tight">Featured Projects</h2>
+              <h2 className="text-3xl font-neuropol font-bold tracking-tight">Featured Projects</h2>
               <p className="text-muted-foreground">Discover the latest and greatest games on Solana</p>
             </div>
             <Link to="/projects">
@@ -219,7 +219,7 @@ const Index = () => {
         <div className="container">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div className="space-y-2 mb-6 md:mb-0">
-              <h2 className="text-3xl font-bold tracking-tight">Featured Tokens</h2>
+              <h2 className="text-3xl font-neuropol font-bold tracking-tight">Featured Tokens</h2>
               <p className="text-muted-foreground">Track the performance of top Solana gaming tokens</p>
             </div>
             <Link to="/tokens">
@@ -253,7 +253,7 @@ const Index = () => {
       <section className="py-24">
         <div className="container">
           <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Why Solana for Gaming?</h2>
+            <h2 className="text-3xl font-bold font-neuropol tracking-tight mb-4">Why Solana for Gaming?</h2>
             <p className="text-muted-foreground">
               Solana's high-performance blockchain is revolutionizing the gaming industry
               with fast transactions, low fees, and seamless user experiences.
@@ -354,7 +354,7 @@ const Index = () => {
       <section className="py-24 bg-solana/10">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center space-y-8 reveal-animation">
-            <h2 className="text-3xl md:text-4xl font-bold">Ready to Dive Into Solana Gaming?</h2>
+            <h2 className="text-3xl font-neuropol md:text-4xl font-bold">Ready to Dive Into Solana Gaming?</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Start exploring the vibrant ecosystem of games, projects, and tokens 
               building the future of gaming on Solana.

@@ -132,10 +132,16 @@ export function SwapForm() {
   };
 
   return (
+  
+  <div className="container"> 
+  <span className="font-neuropol text-3xl font-bold mb-4">Swap</span>
     <div className="w-full bg-background border rounded-xl p-6">
+      
       {/* From секция */}
       <div className="space-y-3">
+        
         <div className="flex justify-between">
+      
           <span className="text-sm text-muted-foreground">От</span>
           <div className="text-sm text-right">
             <div className="text-muted-foreground">Баланс: 0.00 {fromToken.symbol}</div>
@@ -297,6 +303,7 @@ export function SwapForm() {
           ? 'Загрузка...' 
           : 'Обменять'}
       </Button>
+    </div>
     </div>
   );
 } 
