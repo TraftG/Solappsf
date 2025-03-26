@@ -32,7 +32,7 @@ const WalletButtonContent: FC = () => {
       <DropdownMenuTrigger asChild>
         <div className="flex items-center gap-2 cursor-pointer">
           <Avatar className="h-8 w-8 hover:ring-2 hover:ring-solana transition-all">
-            <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${address}`} alt={shortAddress} />
+            <AvatarImage src={`https://api.dicebear.com/9.x/pixel-art/svg?seed=${address}`} alt={shortAddress} />
             <AvatarFallback>{shortAddress}</AvatarFallback>
           </Avatar>
 
@@ -51,6 +51,15 @@ const WalletButtonContent: FC = () => {
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuItem onClick={() => navigate(`/profile/${address}`)}>
           Profile
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate(`/dapps/my`)}>
+          My Dapps
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate(`/tokens/my`)}>
+          My Tokens
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate(`/portfolio`)}>
+          Portfolio
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => disconnect()}>
           Disconnect

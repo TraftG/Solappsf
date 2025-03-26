@@ -15,6 +15,9 @@ import Developers from "./pages/Developers";
 import Swap from "./pages/swap";
 import Profile from "./pages/Profile";
 import PublishDapp from "./pages/PublishDapp";
+import Portfolio from "./pages/Portfolio";
+import MyDapps from "./pages/MyDapps";
+import MyTokens from "./pages/MyTokens";
 import '@solana/wallet-adapter-react-ui/styles.css';
 import { WalletProvider } from '@solana/wallet-adapter-react';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
@@ -53,6 +56,9 @@ const App = () => {
                   <Route path="/swap" element={<Swap />} />
                   <Route path="/profile/:address" element={<Profile />} />
                   <Route path="/publish-dapp" element={<PublishDapp />} />
+                  <Route path="/portfolio" element={<Portfolio />} />
+                  <Route path="/dapps/my" element={<MyDapps />} />
+                  <Route path="/tokens/my" element={<MyTokens />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
               </Routes>
