@@ -148,6 +148,26 @@ export const games: Game[] = [
     nftVolume: 1800000
   },
   {
+    id: "ton-shaker",
+    title: "Ton Shaker",
+    description: "Shake your phone, earn real crypto with TON Shaker! Join the Shakeconomy!",
+    image: "/images/tonshaker.jpeg",
+    coverImage: "/images/shakercover.avif",
+    categories: ["Move-to-Earn", "Fitness", "Play-to-Earn"],
+    status: "live",
+    hasNft: false,
+    hasToken: true,
+    tokenSymbol: "TOSH",
+    website: "https://tonshaker.com",
+    twitter: "https://twitter.com/tonshaker",
+    telegram: "https://t.me/tonshakerbot",
+    tvl: 5600000,
+    monthlyRevenue: 180000,
+    monthlyActiveUsers: 42000,
+    nftFloorPrice: 0.7, 
+    nftVolume: 1800000
+  },
+  {
     id: "cryowar",
     title: "Cryowar",
     description: "Real-time multiplayer PVP arena combat game.",

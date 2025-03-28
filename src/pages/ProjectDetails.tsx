@@ -1,4 +1,3 @@
-
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,6 +7,7 @@ import { StatsCard } from "@/components/ui-custom/stats-card";
 import { GameCard } from "@/components/ui-custom/game-card";
 import { ValueChange } from "@/components/ui-custom/value-change";
 import { getGameById, getTokensByGameId, games } from "@/lib/data";
+import { cn } from "@/lib/utils";
 import { 
   ExternalLink, 
   Link, 
@@ -90,7 +90,6 @@ const ProjectDetail = () => {
               {game.website && (
                 <Button size="sm" variant="outline" className="rounded-full bg-background/80 backdrop-blur-sm" asChild>
                   <a href={game.website} target="_blank" rel="noopener noreferrer">
-                    <Link className="h-4 w-4 mr-2" />
                     Website
                   </a>
                 </Button>
@@ -312,10 +311,6 @@ const ProjectDetail = () => {
     </div>
   );
 };
-
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(" ");
-}
 
 function formatLargeNumber(value: number): string {
   if (value >= 1_000_000_000) {

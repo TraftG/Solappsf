@@ -31,6 +31,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   const getTrendColor = () => {
     if (trend === "up") return "text-emerald-500";
     if (trend === "down") return "text-red-500";
+    
     return "text-muted-foreground";
   };
 

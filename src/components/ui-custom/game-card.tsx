@@ -34,7 +34,7 @@ export function GameCard({
   style,
 }: GameCardProps) {
   return (
-    <Link to={`/project/${id}`}>
+    <Link to={`/projects/${id}`}>
       <Card className={cn("group overflow-hidden transition-all hover:shadow-lg", className)} style={style}>
         {/* Баннер */}
         <div className="relative h-48 w-full">

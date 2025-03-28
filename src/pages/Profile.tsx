@@ -112,7 +112,8 @@ const Profile = () => {
                 <div className="absolute bottom-0 right-0 bg-primary text-primary-foreground p-2 rounded-full">
                   <Wallet size={16} />
                 </div>
-              </div>
+              </div> 
+            
               
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
