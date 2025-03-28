@@ -164,7 +164,7 @@ export const games: Game[] = [
     tvl: 5600000,
     monthlyRevenue: 180000,
     monthlyActiveUsers: 42000,
-    nftFloorPrice: 0.7, 
+    nftFloorPrice: 0.7,
     nftVolume: 1800000
   },
   {
@@ -248,7 +248,7 @@ export const tokens: Token[] = [
     id: "atlas",
     name: "Star Atlas",
     symbol: "ATLAS",
-    icon: "images/staratlas-logo.png",
+    icon: "/images/staratlas-logo.png",
     price: 0.012,
     priceChange24h: 1.5,
     marketCap: 120000000,
@@ -265,7 +265,7 @@ export const tokens: Token[] = [
     id: "gmt",
     name: "STEPN",
     symbol: "GMT",
-    icon: "images/stepn-logo.png",
+    icon: "/images/stepn-logo.png",
     price: 0.78,
     priceChange24h: 12.4,
     marketCap: 468000000,
