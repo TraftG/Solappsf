@@ -47,21 +47,24 @@ const ProjectDetail = () => {
         .slice(0, 3);
       setSimilarGames(similar);
     }
-    
-  }, [game]);
+  }, [game]); 
 
   
 
   const handleOpenApp = () => {
     setShowSplash(true);
-    setShowIframe(true);
-  };
-
-  const handleCloseIframe = () => {
-    setShowIframe(false);
-    setShowSplash(false);  // Скрыть заставку при закрытии iframe
+    
+    setTimeout(() => {
+      setShowIframe(true);
+    }, 100);
   };
   
+  const handleCloseIframe = () => {
+    setShowIframe(false);
+    setTimeout(() => {
+      setShowSplash(false);
+    }, 500);
+  };
 
   if (!game) {
     return (
@@ -265,20 +268,26 @@ const ProjectDetail = () => {
 
       {/* Iframe Modal */}
       {showIframe && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex flex-col">
-          <button
-            onClick={handleCloseIframe}  // Теперь вызываем функцию, которая закроет оба состояния
-            className="absolute top-4 right-4 z-50 bg-white/80 text-black px-4 py-2 rounded-full shadow-lg transition opacity-80 hover:bg-white/70"
-          >
-            ✕ Close
-          </button>
-          <iframe
-            src={game.website}
-            className="w-full h-full"
-            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-          />
-        </div>
-      )}
+  <div className="fixed inset-0 z-50 bg-black/90 flex flex-col">
+    <button
+      onClick={handleCloseIframe}
+      className="absolute top-4 right-4 z-50 bg-white/80 text-black px-4 py-2 rounded-full shadow-lg transition opacity-80 hover:bg-white/70"
+    >
+      ✕ Close
+    </button>
+    <iframe
+      src={game.website}
+      className="w-full h-full"
+      sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+      onLoad={() => {
+        // Когда iframe загрузился, можно убрать заставку
+        setTimeout(() => {
+          setShowSplash(false);
+        }, 1000); // Оставляем заставку минимум на 1 секунду после загрузки
+      }}
+    />
+  </div>
+)}
     </div>
   );
 };
