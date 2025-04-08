@@ -1,4 +1,7 @@
+"use client";
+
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -8,17 +11,23 @@ import { GameCard } from "@/components/ui-custom/game-card";
 import { ValueChange } from "@/components/ui-custom/value-change";
 import { getGameById, getTokensByGameId, games } from "@/lib/data";
 import { cn } from "@/lib/utils";
-import { 
-  ExternalLink, 
-  Link, 
-  Users, 
-  Wallet, 
+import {
+  ExternalLink,
+  Link,
+  Users,
+  Wallet,
   TrendingUp,
-  Image as ImageIcon, 
-  Twitter, 
-  MessageCircle 
+  Image as ImageIcon,
+  Twitter,
+  MessageCircle,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+
+const formatLargeNumber = (num: number) => {
+  if (num >= 1e9) return (num / 1e9).toFixed(1) + "B";
+  if (num >= 1e6) return (num / 1e6).toFixed(1) + "M";
+  if (num >= 1e3) return (num / 1e3).toFixed(1) + "K";
+  return num.toString();
+};
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -26,20 +35,33 @@ const ProjectDetail = () => {
   const [relatedTokens, setRelatedTokens] = useState(getTokensByGameId(id || ""));
   const [imageLoaded, setImageLoaded] = useState(false);
   const [similarGames, setSimilarGames] = useState<typeof games>([]);
-  
+  const [isLoading, setIsLoading] = useState(true);
+  const [showIframe, setShowIframe] = useState(false);
+  const [showSplash, setShowSplash] = useState(false);
+
   useEffect(() => {
+    
     if (game) {
-      // Find games with similar categories (at least one match)
       const similar = games
-        .filter(g => 
-          g.id !== game.id && 
-          g.categories.some(cat => game.categories.includes(cat))
-        )
+        .filter((g) => g.id !== game.id && g.categories.some((cat) => game.categories.includes(cat)))
         .slice(0, 3);
-      
       setSimilarGames(similar);
     }
+    
   }, [game]);
+
+  
+
+  const handleOpenApp = () => {
+    setShowSplash(true);
+    setShowIframe(true);
+  };
+
+  const handleCloseIframe = () => {
+    setShowIframe(false);
+    setShowSplash(false);  // Скрыть заставку при закрытии iframe
+  };
+  
 
   if (!game) {
     return (
@@ -57,28 +79,31 @@ const ProjectDetail = () => {
 
   return (
     <div className="container py-8">
+      {/* Splash Screen */}
+      {showSplash && (
+        <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center">
+          <div className="text-center p-6 max-w-md">
+            <h1 className="text-6xl font-bold font-neuropol  text-white mb-6 animate-pulse">Solapps</h1>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <div className="relative rounded-xl overflow-hidden h-[300px] mb-6">
-        <div className={cn(
-          "w-full h-full bg-muted animate-pulse",
-          imageLoaded ? "hidden" : "block"
-        )} />
+        <div className={cn("w-full h-full bg-muted animate-pulse", imageLoaded ? "hidden" : "block")} />
         <img
           src={game.coverImage || game.image}
           alt={game.title}
-          className={cn(
-            "w-full h-full object-cover",
-            imageLoaded ? "opacity-100" : "opacity-0"
-          )}
+          className={cn("w-full h-full object-cover", imageLoaded ? "opacity-100" : "opacity-0")}
           style={{ transition: "opacity 0.5s ease-in-out" }}
           onLoad={() => setImageLoaded(true)}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
         <div className="absolute bottom-0 left-0 p-6 w-full">
           <div className="flex flex-col md:flex-row md:items-end justify-between">
             <div>
               <div className="flex gap-2 mb-2">
-                {game.categories.map(category => (
+                {game.categories.map((category) => (
                   <Badge key={category} variant="secondary" className="bg-background/80 backdrop-blur-sm">
                     {category}
                   </Badge>
@@ -88,25 +113,36 @@ const ProjectDetail = () => {
             </div>
             <div className="flex gap-3 mt-4 md:mt-0">
               {game.website && (
-                <Button size="sm" variant="outline" className="rounded-full bg-background/80 backdrop-blur-sm" asChild>
-                  <a href={game.website} target="_blank" rel="noopener noreferrer">
-                    Website
-                  </a>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="rounded-full bg-background/80 backdrop-blur-sm"
+                  onClick={handleOpenApp}
+                >
+                  Open App
                 </Button>
               )}
               {game.twitter && (
-                <Button size="sm" variant="outline" className="rounded-full bg-background/80 backdrop-blur-sm" asChild>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="rounded-full bg-background/80 backdrop-blur-sm"
+                  asChild
+                >
                   <a href={game.twitter} target="_blank" rel="noopener noreferrer">
                     <Twitter className="h-4 w-4 mr-2" />
-                    Twitter
                   </a>
                 </Button>
               )}
               {game.discord && (
-                <Button size="sm" variant="outline" className="rounded-full bg-background/80 backdrop-blur-sm" asChild>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="rounded-full bg-background/80 backdrop-blur-sm"
+                  asChild
+                >
                   <a href={game.discord} target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="h-4 w-4 mr-2" />
-                    Discord
                   </a>
                 </Button>
               )}
@@ -114,11 +150,10 @@ const ProjectDetail = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
-          {/* Description */}
           <Card>
             <CardContent className="p-6">
               <h2 className="text-xl font-bold mb-4">About {game.title}</h2>
@@ -127,8 +162,8 @@ const ProjectDetail = () => {
               </p>
             </CardContent>
           </Card>
-          
-          {/* Statistics */}
+
+          {/* Stats */}
           <div>
             <h2 className="text-xl font-bold mb-4">Key Metrics</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -161,18 +196,14 @@ const ProjectDetail = () => {
               )}
             </div>
           </div>
-          
+
           {/* NFT Section */}
           {game.hasNft && (
             <div>
               <h2 className="text-xl font-bold mb-4">NFT Collection</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {game.nftFloorPrice && (
-                  <StatsCard
-                    title="Floor Price"
-                    value={`${game.nftFloorPrice} SOL`}
-                    variant="outline"
-                  />
+                  <StatsCard title="Floor Price" value={`${game.nftFloorPrice} SOL`} variant="outline" />
                 )}
                 {game.nftVolume && (
                   <StatsCard
@@ -192,41 +223,33 @@ const ProjectDetail = () => {
               </div>
             </div>
           )}
-          
+
           {/* Similar Projects */}
           {similarGames.length > 0 && (
             <div>
               <h2 className="text-xl font-bold mb-4">Similar Projects</h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {similarGames.map(similarGame => (
-                  <GameCard
-                    key={similarGame.id}
-                    {...similarGame}
-                  />
+                {similarGames.map((similarGame) => (
+                  <GameCard key={similarGame.id} {...similarGame} />
                 ))}
               </div>
             </div>
           )}
         </div>
-        
+
         {/* Sidebar */}
         <div className="space-y-6">
-          {/* Status */}
           <Card>
             <CardContent className="p-6">
               <h3 className="font-medium mb-4">Project Status</h3>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-muted-foreground">Status</span>
-                  <Badge className="capitalize">
-                    {game.status}
-                  </Badge>
+                  <Badge className="capitalize">{game.status}</Badge>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-muted-foreground">Has NFTs</span>
-                  <Badge variant={game.hasNft ? "default" : "outline"}>
-                    {game.hasNft ? "Yes" : "No"}
-                  </Badge>
+                  <Badge variant={game.hasNft ? "default" : "outline"}>{game.hasNft ? "Yes" : "No"}</Badge>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-muted-foreground">Has Token</span>
@@ -237,90 +260,27 @@ const ProjectDetail = () => {
               </div>
             </CardContent>
           </Card>
-          
-          {/* Token Information */}
-          {game.hasToken && relatedTokens.length > 0 && (
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-medium mb-4">Token Information</h3>
-                {relatedTokens.map(token => (
-                  <div key={token.id} className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-muted flex-shrink-0 overflow-hidden">
-                        <img src={token.icon} alt={token.name} className="w-full h-full object-cover" />
-                      </div>
-                      <div>
-                        <div className="font-medium">{token.name} ({token.symbol})</div>
-                        <div className="flex items-center text-sm">
-                          <span className="text-muted-foreground mr-2">${token.price.toFixed(token.price < 0.01 ? 6 : 2)}</span>
-                          <ValueChange value={token.priceChange24h} />
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <Separator />
-                    
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground text-sm">Market Cap</span>
-                        <span className="font-medium">${formatLargeNumber(token.marketCap)}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground text-sm">Volume (24h)</span>
-                        <span className="font-medium">${formatLargeNumber(token.volume24h)}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground text-sm">Circulating Supply</span>
-                        <span className="font-medium">{formatLargeNumber(token.circulatingSupply)} {token.symbol}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex gap-2">
-                      <Button size="sm" className="w-full rounded-lg bg-solana" asChild>
-                        <a href="https://jup.ag" target="_blank" rel="noopener noreferrer">
-                          Buy on Jupiter
-                        </a>
-                      </Button>
-                      <Button size="sm" variant="outline" className="w-full rounded-lg" asChild>
-                        <a href={`/tokens/${token.id}`}>
-                          View Details
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          )}
-          
-          {/* Categories */}
-          <Card>
-            <CardContent className="p-6">
-              <h3 className="font-medium mb-4">Categories</h3>
-              <div className="flex flex-wrap gap-2">
-                {game.categories.map(category => (
-                  <Badge key={category} variant="outline">
-                    {category}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
+
+      {/* Iframe Modal */}
+      {showIframe && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex flex-col">
+          <button
+            onClick={handleCloseIframe}  // Теперь вызываем функцию, которая закроет оба состояния
+            className="absolute top-4 right-4 z-50 bg-white/80 text-black px-4 py-2 rounded-full shadow-lg transition opacity-80 hover:bg-white/70"
+          >
+            ✕ Close
+          </button>
+          <iframe
+            src={game.website}
+            className="w-full h-full"
+            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+          />
+        </div>
+      )}
     </div>
   );
 };
-
-function formatLargeNumber(value: number): string {
-  if (value >= 1_000_000_000) {
-    return `${(value / 1_000_000_000).toFixed(1)}B`;
-  } else if (value >= 1_000_000) {
-    return `${(value / 1_000_000).toFixed(1)}M`;
-  } else if (value >= 1_000) {
-    return `${(value / 1_000).toFixed(1)}K`;
-  }
-  return value.toString();
-}
 
 export default ProjectDetail;

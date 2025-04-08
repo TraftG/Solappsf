@@ -66,6 +66,27 @@ export const games: Game[] = [
     nftVolume: 6500000
   },
   {
+    id: "Push",
+    title: "Push",
+    description: "A play-to-earn JRPG game with PvE and PvP elements.",
+    fullDescription: "Aurory is a Free-to-Play Japanese role-playing game with Play-and-Earn mechanics built on the Solana blockchain. Players dive into an immersive fantasy metaverse where they can collect, train, and battle digital creatures called Nefties. The game features both PvE adventure mode and PvP battle arenas, powered by the AURY token ecosystem.",
+    image: "/images/push.png",
+    coverImage: "/images/push.png",
+    categories: ["RPG", "Adventure", "Play-to-Earn"],
+    status: "live",
+    hasNft: true,
+    hasToken: true,
+    tokenSymbol: "AURY",
+    website: "https://push-abe19.web.app",
+    twitter: "https://twitter.com/AuroryProject",
+    discord: "https://discord.gg/aurory",
+    tvl: 12500000,
+    monthlyRevenue: 450000,
+    monthlyActiveUsers: 50000,
+    nftFloorPrice: 3.2,
+    nftVolume: 6500000
+  },
+  {
     id: "star-atlas",
     title: "Star Atlas",
     description: "A space-themed grand strategy MMO built on Unreal Engine 5.",
