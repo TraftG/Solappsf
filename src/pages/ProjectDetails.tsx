@@ -56,7 +56,7 @@ const ProjectDetail = () => {
     
     setTimeout(() => {
       setShowIframe(true);
-    }, 100);
+    }, 2000);
   };
   
   const handleCloseIframe = () => {

@@ -24,11 +24,12 @@ import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets';
 import { useMemo } from 'react';
 import { clusterApiUrl } from '@solana/web3.js';
+import { WalletIframeProvider } from './components/WalletIframeProvider';
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const endpoint = useMemo(() => clusterApiUrl('testnet'), []);
+  const endpoint = useMemo(() => clusterApiUrl('devnet'), []);
   const wallets = useMemo(
     () => [
       new PhantomWalletAdapter(),
@@ -37,9 +38,10 @@ const App = () => {
   );
 
   return (
-    <WalletProvider wallets={wallets} autoConnect>
-      <WalletModalProvider>
-        <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <WalletProvider wallets={wallets} autoConnect>
+        <WalletModalProvider>
+          <WalletIframeProvider />
           <TooltipProvider>
             <Toaster />
             <Sonner />
@@ -64,9 +66,9 @@ const App = () => {
               </Routes>
             </BrowserRouter>
           </TooltipProvider>
-        </QueryClientProvider>
-      </WalletModalProvider>
-    </WalletProvider>
+        </WalletModalProvider>
+      </WalletProvider>
+    </QueryClientProvider>
   );
 };
 

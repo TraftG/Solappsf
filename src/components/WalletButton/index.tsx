@@ -1,4 +1,4 @@
-import { FC } from 'react';
+  import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
